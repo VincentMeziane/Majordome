@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Majordome' %}
+
+{% block body %}
+<h1>{{ pluralize(cards|length, 'Card') }}</h1>
+
+{% for card in cards %}
+	<article>
+		<h2>{{card.title}}</h2>
+		<p>{{card.description}}</p>
+	</article>
+{% endfor %}
+{% endblock %}
