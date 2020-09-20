@@ -7,7 +7,7 @@
 
 {% for card in cards %}
 	<article>
-		<h2><a href="{{ path('app_cards_show', {id: card.id}) }}">{{card.title}}</a></h2>
+		<h2><a href="{{ path('app_card_show', {id: card.id}) }}">{{card.title}}</a></h2>
 		<p>{{card.description}}</p>
 	</article>
 {% endfor %}
