@@ -15,7 +15,7 @@ class CardsController extends AbstractController
      */
     public function index(CardRepository $cardRepository ): Response
     {
-        $cards = $cardRepository->findAll();
+        $cards = $cardRepository->findBy([], ['createdAt' => 'DESC']);
         return $this->render('cards/index.html.twig', compact('cards'));
     }
 
