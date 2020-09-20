@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title card.title %}
+
+{% block body %}
+	<article>
+		<h1>{{ card.title }}</h1>
+		<p>{{card.description}}</p>	
+	</article>
+
+	<a href="{{path('app_home')}}">Retour</a>
+{% endblock %}
