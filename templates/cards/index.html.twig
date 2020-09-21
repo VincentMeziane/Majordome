@@ -8,7 +8,8 @@
 {% for card in cards %}
 	<article>
 		<h2><a href="{{ path('app_card_show', {id: card.id}) }}">{{card.title}}</a></h2>
-		<p>{{card.description}}</p>
+		<p>{{card.description|u.truncate(10, '...', false)}}</p>
+		<p><i><small>{{ card.createdAt|ago }}</small></i></p>
 	</article>
 {% endfor %}
 {% endblock %}
