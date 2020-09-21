@@ -3,16 +3,17 @@
 {% block title card.title %}
 
 {% block body %}
-	<article>
-		<h1>{{ card.title }}</h1>
-		<p>{{card.description}}</p>	
+	<article class="col-12 border border-white rounded shadow">
+		<h1 class="text-center border-bottom border-dark p-2">{{ card.title }}</h1>
+		<p class="p-2">{{card.description}}</p>	
 	</article>
-
-	<a href="{{path('app_home')}}">Retour</a> | 
-	<a href="{{path('app_card_edit', {id: card.id} )}}">Modifier</a> | 
-	<a href="#"
-		onclick="event.preventDefault(); confirm('Are you sure ?') && document.getElementById('js-card-delete-form').submit();"
-		>Delete</a>
+ 
+	<div class="buttonsDiv mt-5 m-2">
+		<a class="btn btn-info" href="{{path('app_card_edit', {id: card.id} )}}">Modifier</a> 
+		<a class="btn btn-danger" href="#"
+			onclick="event.preventDefault(); confirm('Are you sure ?') && document.getElementById('js-card-delete-form').submit();"
+			>Supprimer</a>
+	</div>
 	
 	<form id="js-card-delete-form" action="{{path('app_card_delete', {id: card.id}) }}" method="POST" style="display:none;">
 		<input type="hidden" name="csrf_token" value="{{ csrf_token('card_deletion_' ~ card.id) }}">

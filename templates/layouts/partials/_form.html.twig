@@ -1,4 +1,6 @@
 {{ form_start(formulaire) }}
-	{{form_widget(formulaire)}}
-	<input type="submit" value="{{submitButtonText ?? 'Valider'}}" formnovalidate>
+
+{{form_widget(formulaire)}}
+<input type="submit" value="{{submitButtonText ?? 'Valider'}}" formnovalidate class="btn btn-primary btn-block">
+
 {{ form_end(formulaire) }}

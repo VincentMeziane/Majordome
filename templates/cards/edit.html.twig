@@ -3,7 +3,10 @@
 {% block title 'Modifier '~ card.title %}
 
 {% block body %}
-	<h1>Créer une nouvelle carte</h1>
+<div class="row">
+	<div class="col-md-6 mx-auto">
+	<h1 class="text-center col-12">Créer une nouvelle carte</h1>
 	{{include('layouts/partials/_form.html.twig', {submitButtonText: 'Enregistrer'})}}
-
+</div>
+</div>
 {% endblock %}
