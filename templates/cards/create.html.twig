@@ -4,9 +4,7 @@
 
 {% block body %}
 	<h1>Créer une nouvelle carte</h1>
-	{{ form_start(formulaire) }}
-	{{form_widget(formulaire)}}
-	<input type="submit" value="Créer la carte">
-	{{ form_end(formulaire) }}
+	
+	{{include('cards/_form.html.twig')}}
 	
 {% endblock %}
