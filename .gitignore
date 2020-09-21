@@ -1,4 +1,9 @@
-
+###> Général
+config.json
+*.log
+build/
+video.txt
+###<
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php

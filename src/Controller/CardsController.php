@@ -48,12 +48,13 @@ class CardsController extends AbstractController
             return $this->render('cards/create.html.twig', ['formulaire' => $form->createView()]);
         }
     }
+
     /**
      * @Route("/card/edit/{id<[0-9]+>}", name="app_card_edit" , methods="GET|PUT")
      */
-    public function edit(Card $card,Request $request, EntityManagerInterface $em ): Response
+    public function edit(Card $card, Request $request, EntityManagerInterface $em): Response
     {
-        $form = $form = $this->createForm(CardType::class , $card, [
+        $form = $form = $this->createForm(CardType::class, $card, [
             'method' => 'PUT'
         ]);
 
@@ -70,14 +71,14 @@ class CardsController extends AbstractController
             'card' => $card
         ]);
     }
+
     /**
      * @Route("/card/delete/{id<[0-9]+>}", name="app_card_delete" , methods="DELETE")
      */
-    public function delete(Request $request, Card $card, EntityManagerInterface $em ): Response
+    public function delete(Request $request, Card $card, EntityManagerInterface $em): Response
     {
         $token = $request->request->get('csrf_token');
-        if($this->isCsrfTokenValid('card_deletion_' . $card->getId(), $token ))
-        {
+        if ($this->isCsrfTokenValid('card_deletion_' . $card->getId(), $token)) {
             $em->remove($card);
             $em->flush();
         }
