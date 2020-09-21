@@ -15,6 +15,7 @@
 		>Delete</a>
 	
 	<form id="js-card-delete-form" action="{{path('app_card_delete', {id: card.id}) }}" method="POST" style="display:none;">
+		<input type="hidden" name="csrf_token" value="{{ csrf_token('card_deletion_' ~ card.id) }}">
 		<input type="hidden" name="_method" value="DELETE">
 		<input type="submit" value="Delete">
 	</form>

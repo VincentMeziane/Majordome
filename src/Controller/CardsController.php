@@ -73,10 +73,14 @@ class CardsController extends AbstractController
     /**
      * @Route("/card/delete/{id<[0-9]+>}", name="app_card_delete" , methods="DELETE")
      */
-    public function delete(Card $card, EntityManagerInterface $em ): Response
+    public function delete(Request $request, Card $card, EntityManagerInterface $em ): Response
     {
-        $em->remove($card);
-        $em->flush();
+        $token = $request->request->get('csrf_token');
+        if($this->isCsrfTokenValid('card_deletion_' . $card->getId(), $token ))
+        {
+            $em->remove($card);
+            $em->flush();
+        }
         return $this->redirectToRoute('app_home');
     }
 }
