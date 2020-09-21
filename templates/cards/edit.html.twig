@@ -1,9 +1,9 @@
-{% extends 'base.html.twig' %}
+{% extends 'layouts/base.html.twig' %}
 
 {% block title 'Modifier '~ card.title %}
 
 {% block body %}
 	<h1>Créer une nouvelle carte</h1>
-	{{include('cards/_form.html.twig', {submitButtonText: 'Enregistrer'})}}
+	{{include('layouts/partials/_form.html.twig', {submitButtonText: 'Enregistrer'})}}
 
 {% endblock %}

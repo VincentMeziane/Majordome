@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Welcome!
+			{% endblock %}
+		</title>
+        {% block stylesheets %}{% endblock %}
+        <style>
+        .alert{
+            padding: 10px;
+            color: white;
+            text-align: center;
+        }
+        .alert-success{
+            background-color: green;
+        }
+        .alert-error{
+            background-color: rgb(241, 82, 82);
+        }
+        .alert-info{
+            background-color: rgb(204, 204, 117);
+        }
+        </style>
+	</head>
+
+	<body>
+		<nav>
+			<ul>
+				<li>
+					<a href="{{path('app_home')}}">Accueil</a>
+				</li>
+				<li>
+					<a href="{{path('app_card_create')}}">Nouvelle carte</a>
+				</li>
+            </ul>
+            {{include('layouts/partials/_flash-message.html.twig')}}
+		</nav>
+		{% block body %}{% endblock %}
+		{% block javascripts %}{% endblock %}
+	</body>
+</html>

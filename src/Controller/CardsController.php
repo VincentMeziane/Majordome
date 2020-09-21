@@ -43,6 +43,9 @@ class CardsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($card);
             $em->flush();
+
+            $this->addFlash('success', 'Carte créée');
+
             return $this->redirectToRoute('app_home');
         } else {
             return $this->render('cards/create.html.twig', ['formulaire' => $form->createView()]);
@@ -62,9 +65,13 @@ class CardsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
 
+            $this->addFlash('success', 'Carte modifiée');
             return $this->redirectToRoute('app_home');
         }
-
+        else if($form->isSubmitted())
+        {
+            $this->addFlash('error', 'La modification n\'a pas pu être effectuée');
+        }
 
         return $this->render('cards/edit.html.twig', [
             'formulaire' => $form->createView(),
@@ -81,6 +88,7 @@ class CardsController extends AbstractController
         if ($this->isCsrfTokenValid('card_deletion_' . $card->getId(), $token)) {
             $em->remove($card);
             $em->flush();
+            $this->addFlash('info', 'Carte supprimée');
         }
         return $this->redirectToRoute('app_home');
     }

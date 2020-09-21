@@ -1,10 +1,10 @@
-{% extends 'base.html.twig' %}
+{% extends 'layouts/base.html.twig' %}
 
 {% block title 'Nouvelle carte' %}
 
 {% block body %}
 	<h1>Créer une nouvelle carte</h1>
 	
-	{{include('cards/_form.html.twig')}}
+	{{include('layouts/partials/_form.html.twig')}}
 	
 {% endblock %}
