@@ -70,4 +70,13 @@ class CardsController extends AbstractController
             'card' => $card
         ]);
     }
+    /**
+     * @Route("/card/delete/{id<[0-9]+>}", name="app_card_delete" , methods="DELETE")
+     */
+    public function delete(Card $card, EntityManagerInterface $em ): Response
+    {
+        $em->remove($card);
+        $em->flush();
+        return $this->redirectToRoute('app_home');
+    }
 }

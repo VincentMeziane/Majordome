@@ -9,5 +9,13 @@
 	</article>
 
 	<a href="{{path('app_home')}}">Retour</a> | 
-	<a href="{{path('app_card_edit', {id: card.id} )}}">Modifier</a>
+	<a href="{{path('app_card_edit', {id: card.id} )}}">Modifier</a> | 
+	<a href="#"
+		onclick="event.preventDefault(); confirm('Are you sure') && document.getElementById('js-card-delete-form').submit();"
+		>Delete</a>
+	
+	<form id="js-card-delete-form" action="{{path('app_card_delete', {id: card.id}) }}" method="POST" style="display:none;">
+		<input type="hidden" name="_method" value="DELETE">
+		<input type="submit" value="Delete">
+	</form>
 {% endblock %}
