@@ -3,13 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Card;
+use App\Form\CardType;
 use App\Repository\CardRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CardsController extends AbstractController
@@ -37,10 +36,7 @@ class CardsController extends AbstractController
     public function create(Request $request, EntityManagerInterface $em): Response
     {
         $card = new Card;
-        $form = $this->createFormBuilder($card)
-            ->add('title')
-            ->add('description')
-            ->getForm();
+        $form = $this->createForm(CardType::class, $card);
 
         $form->handleRequest($request);
 
@@ -53,14 +49,13 @@ class CardsController extends AbstractController
         }
     }
     /**
-     * @Route("/card/edit/{id<[0-9]+>}", name="app_card_edit" , methods="GET|POST")
+     * @Route("/card/edit/{id<[0-9]+>}", name="app_card_edit" , methods="GET|PUT")
      */
     public function edit(Card $card,Request $request, EntityManagerInterface $em ): Response
     {
-        $form = $this->createFormBuilder($card)
-            ->add('title')
-            ->add('description')
-            ->getForm();
+        $form = $form = $this->createForm(CardType::class , $card, [
+            'method' => 'PUT'
+        ]);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
