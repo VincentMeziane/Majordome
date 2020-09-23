@@ -1,4 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Neuton&display=swap");
+@import 'shared/variables';
+@import "~bootstrap";
+
+html,body {
+	font-family: 'Neuton', serif;
+}
 
 .alert {
 	padding: 10px;
@@ -11,7 +17,7 @@
 		background-color: green;
 	}
 	&.alert-error {
-		background-color: #f15252;
+		background-color: $primary;
 	}
 	&.alert-info {
 		background-color: #cccc75;
