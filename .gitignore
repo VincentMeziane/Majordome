@@ -4,6 +4,7 @@ config.json
 build/
 video.txt
 lorem.html
+/public/uploads/
 ###<
 ###> symfony/framework-bundle ###
 /.env.local

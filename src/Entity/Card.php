@@ -48,7 +48,7 @@ class Card
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      * 
      * @Vich\UploadableField(mapping="card_image", fileNameProperty="imageName")
-     * 
+     * @Assert\Image(maxSize="8M", maxSizeMessage="Le fichier est trop volumineux ({{ size }}{{ suffix }}). La taille maximale autorisée est de {{ limit }} {{ suffix }}", mimeTypes="image/jpeg")
      * @var File|null
      */
     private $imageFile;
