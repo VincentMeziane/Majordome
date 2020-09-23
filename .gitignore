@@ -3,6 +3,7 @@ config.json
 *.log
 build/
 video.txt
+lorem.html
 ###<
 ###> symfony/framework-bundle ###
 /.env.local
@@ -20,3 +21,10 @@ video.txt
 .phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
+
+###> symfony/webpack-encore-bundle ###
+/node_modules/
+/public/build/
+npm-debug.log
+yarn-error.log
+###< symfony/webpack-encore-bundle ###
