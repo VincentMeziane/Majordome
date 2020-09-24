@@ -12,6 +12,9 @@ import '../css/app.scss';
 import $ from 'jquery';
 import 'bootstrap';
 
+
+
+// Gestion du bouton "supprimer l'image - Formulaire d'édition de carte"
 $('.form-check-label').addClass('btn').addClass('btn-danger')
 $('.custom-file-input').on('change', function(e){
 	var inputFile = e.currentTarget;
@@ -31,7 +34,27 @@ $(' .form-check-label', '.vich-image').on('click', function(e){
 		$('.form-check-label').addClass('btn-danger').text("Supprimer l'image");
 	}
 })
+
+
+// Redirection au clic sur une carte
 $('.indexCard').on('click', function(){
 	var path = $(this).data('path');
 	window.location.assign(path);
 })
+
+
+// Border bottom qui coulisse
+var underlined = $('.focus-border').parent()
+
+function fn1(){
+	var parentWidth = $(this).css('width')
+	$(' .focus-border', this).animate({
+		width: parentWidth
+	})
+}
+function fn2(){
+	$(' .focus-border', this).animate({
+		width: 0
+	})
+}
+$(underlined).on("mouseenter", fn1).on("mouseleave", fn2)

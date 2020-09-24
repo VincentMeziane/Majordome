@@ -5,7 +5,51 @@
 html,
 body {
 	font-family: "Neuton", serif;
+	background-color: $dark1;
 }
+a {
+	transition: 0.3s ease-in-out;
+}
+.underline {
+	border-bottom: 1px white solid;
+	transition: 0.3s ease-in-out;
+}
+.navbar-brand{
+	position: relative;
+}
+.navbar-nav{
+	position: relative;
+}
+.focus-border {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	height: 2px;
+	background-color: white;
+}
+.dark1{
+	background-color: $dark1;
+}
+.dark2{
+	background-color: $dark2;
+}
+.light1{
+	color: $light1;
+}
+.light2{
+	color: $light2;
+}
+.primary{
+	background-color: $primary;
+}
+.secondary{
+	background-color: $secondary;
+}
+.ternary{
+	background-color: $ternary;
+}
+
+
 
 .alert {
 	padding: 10px;
@@ -15,10 +59,10 @@ body {
 	border: none;
 	border-radius: 0;
 	&.alert-success {
-		background-color: green;
+		background-color: $light1;
 	}
 	&.alert-error {
-		background-color: $primary;
+		background-color: $light2;
 	}
 	&.alert-info {
 		background-color: #cccc75;
@@ -66,4 +110,7 @@ body {
 			transform: scale(1.2);
 		}
 	}
+}
+
+.card-title {
 }
