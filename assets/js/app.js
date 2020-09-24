@@ -45,15 +45,19 @@ $('.indexCard').on('click', function(){
 
 // Border bottom qui coulisse
 var underlined = $('.focus-border').parent()
+for (let i = 0; i < underlined.length; i++) {
+	var element = underlined[i];
+	$(element).css('position','relative');
+}
 
-function fn1(){
+function fn1(e){
 	var parentWidth = $(this).css('width')
-	$(' .focus-border', this).animate({
+	$(' .focus-border', this).stop().animate({
 		width: parentWidth
 	})
 }
-function fn2(){
-	$(' .focus-border', this).animate({
+function fn2(e){
+	$(' .focus-border', this).stop().animate({
 		width: 0
 	})
 }
