@@ -3,8 +3,8 @@
 {% block title card.title %}
 
 {% block body %}
-	<article class="col-12 border border-white rounded shadow">
-		<h1 class="text-center border-bottom border-dark p-2">{{ card.title }}</h1>
+	<article id="cardShow" class="col-12 border border-white rounded shadow">
+		<h1 class="text-center border-bottom border-dark p-2">{{ card.title|capitalize }}</h1>
 		<img class="card-img"
 			          src="{{(
 			          card.imageName
