@@ -6,12 +6,21 @@ use App\Entity\Card;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Vich\UploaderBundle\Form\Type\VichImageType;
+use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CardType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        // Ajouter des contraintes en fonction de la méthode (PUT pour la modif et POST pour la création)
+        // $isEdit = $options['method'] === 'PUT';
+        // $imageFileConstraints = [];
+        // if($isEdit)
+        // {
+        //     $imageFileConstraints = ['maxSize' => "1M"];
+        // }
+
         $builder
             ->add('imageFile', VichImageType::class, [
                 'label' => "Ajouter une image ( JPG ou PNG )",
@@ -22,6 +31,7 @@ class CardType extends AbstractType
                 'download_uri' => true,
                 'image_uri' => true,
                 'asset_helper' => true,
+                // 'constraints' => [new Image($imageFileConstraints)]
             ])
             ->add('title')
             ->add('description')
