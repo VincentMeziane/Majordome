@@ -23,7 +23,7 @@ class CardType extends AbstractType
 
         $builder
             ->add('imageFile', VichImageType::class, [
-                'label' => "Changer l'image ( JPG ou PNG < 8Mo )",
+                'label' => "Nouvelle image ( JPG ou PNG < 8Mo )",
                 'required' => false,
                 'allow_delete' => true,
                 'delete_label' => "Supprimer l'image",

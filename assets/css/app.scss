@@ -31,4 +31,16 @@ body {
 		width: 100%;
 		text-align: center;
 	}
+	.form-check{
+		margin-top: 20px;
+		text-align: center;
+		color: red;
+		.form-check-label {
+			cursor: pointer;
+		}
+		#card_imageFile_delete{
+			position: absolute;
+			top: -100000px;
+		}
+	}
 }
