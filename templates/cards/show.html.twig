@@ -5,6 +5,13 @@
 {% block body %}
 	<article class="col-12 border border-white rounded shadow">
 		<h1 class="text-center border-bottom border-dark p-2">{{ card.title }}</h1>
+		<img class="card-img"
+			          src="{{(
+			          card.imageName
+			            ? vich_uploader_asset(card)
+			            : asset('images/placeholder.jpg'))
+			          }}"
+			          alt="{{ card.title }}" />
 		<p class="p-2">{{card.description}}</p>	
 	</article>
  

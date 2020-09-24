@@ -52,3 +52,18 @@ body {
 		}
 	}
 }
+
+.indexCard {
+	.imgContainer{
+		width: auto;
+		overflow: hidden;
+		img{
+			transition: 0.5s ease-out;
+		}
+	}
+	&:hover{
+		img{
+			transform: scale(1.2);
+		}
+	}
+}

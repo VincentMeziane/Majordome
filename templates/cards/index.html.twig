@@ -1,21 +1,44 @@
 {% extends '/layouts/base.html.twig' %}
 
-{% block title 'Majordome' %}
+{% block title %}
+Majordome
+{% endblock %}
 
 {% block body %}
-<h1 class="text-center col-12">{{ pluralize(cards|length, 'Carte') }} trouvées</h1>
+  {% if (cards|length) > 0 %}
+    <h1 class="text-center col-12">
+      {{ pluralize(cards|length, 'Carte') }} trouvées
+    </h1>
 
-{% for card in cards %}
-		
-	<div class="card m-2 col-12 col-sm-5 col-lg-3" style="height: 350px;">
-		{% if card.image is defined %}
-		<img class="card-img-top" src="{{card.image}}" alt="Card image cap">
-		{% endif %}
-		<div class="card-body d-flex flex-column justify-content-start">
-		  <h5 class="card-title"><a href="{{ path('app_card_show', {id: card.id}) }}">{{card.title}}</a></h5>
-		  <p class="card-text">{{card.description|u.truncate(10, '...', false)}}</p>
-		  <p class="mt-auto"><i><small>{{ card.createdAt|ago }}</small></i></p>
-		</div>
-	</div>
-{% endfor %}
+	{% for card in cards %}
+      <div data-path="{{path('app_card_show', {id: card.id})}}" class="indexCard card m-2 p-0 col-auto shadow" style="cursor:pointer">
+			<div class="imgContainer card-img m-2">
+				<img
+				          src="{{(
+				          card.imageName
+				            ? vich_uploader_asset(card)
+				            : asset('images/placeholder.jpg'))|imagine_filter('square_thumbnail_medium')
+				          }}"
+				          alt="{{ card.title }}" />
+			</div>
+
+        <div class="card-body d-flex flex-column justify-content-start">
+          <h5 class="card-title">
+              {{ card.title }}
+          </h5>
+          <p class="card-text">
+            {{ card.description|u.truncate(10, '...', false) }}
+          </p>
+          <p class="mt-auto">
+            <i><small>{{ card.createdAt|ago }}</small></i>
+          </p>
+        </div><!-- fermeture : card infos -->
+      </div><!-- fermeture : card -->
+    {% endfor %}
+  {% else %}
+    <p class="col-12 text-center">
+      Aucune carte pour l'instant.
+    </p> <a href="{{ path('app_card_create') }}" class="btn btn-success">Créer
+      une nouvelle carte</a>
+  {% endif %}
 {% endblock %}

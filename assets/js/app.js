@@ -31,3 +31,7 @@ $(' .form-check-label', '.vich-image').on('click', function(e){
 		$('.form-check-label').addClass('btn-danger').text("Supprimer l'image");
 	}
 })
+$('.indexCard').on('click', function(){
+	var path = $(this).data('path');
+	window.location.assign(path);
+})
