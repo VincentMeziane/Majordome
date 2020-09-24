@@ -11,3 +11,9 @@ import '../css/app.scss';
 // Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
 import $ from 'jquery';
 import 'bootstrap';
+
+
+$('.custom-file-input').on('change', function(e){
+	var inputFile = e.currentTarget;
+	$('~.custom-file-label',inputFile).text(inputFile.files[0].name);
+})
