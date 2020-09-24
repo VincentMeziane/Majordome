@@ -30,9 +30,17 @@ body {
 		display: block;
 		width: 100%;
 		text-align: center;
+		img{
+		@extend .mb-2;
+		@extend .rounded;
+		@extend .shadow;
+		@extend .img-thumbnail;
+		}
 	}
+	
 	.form-check{
-		margin-top: 20px;
+		padding: 0;
+		@extend .mt-3;
 		text-align: center;
 		color: red;
 		.form-check-label {

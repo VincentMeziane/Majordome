@@ -23,7 +23,7 @@ $(' .form-check-label', '.vich-image').on('click', function(e){
 	if(checked === false)
 	{
 		$('#card_imageFile_delete').prop('checked', true)
-		$('.form-check-label').removeClass('btn-danger').html("L'image sera supprimée<br><small class='btn btn-info' style='padding:0.2em'>Annuler</small>");
+		$('.form-check-label').removeClass('btn-danger').html("<i>L'image sera supprimée à l'enregistrement</i><br><small class='btn btn-info' style='padding:0.2em; margin-top:1em;'>Annuler</small>");
 	}
 	else
 	{
