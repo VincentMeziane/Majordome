@@ -24,10 +24,10 @@
         <div class="imgContainer card-img m-2">
           <img src="{{ (card.imageName
               ? vich_uploader_asset(card)
-              : asset('images/placeholder.jpg'))|imagine_filter(
+              : asset('build/images/placeholder.jpg'))|imagine_filter(
               'square_thumbnail_medium'
             ) }}"
-            alt="{{ card.title }}" />
+            alt="{{ card.title }}"  />
         </div>
 
         <div class="card-body d-flex flex-column justify-content-start">

@@ -7,7 +7,7 @@ body {
 	font-family: "Neuton", serif;
 	background-color: $dark1;
 }
-img{
+img {
 	max-width: 100%;
 	height: auto;
 }
@@ -18,10 +18,10 @@ a {
 	border-bottom: 1px white solid;
 	transition: 0.3s ease-in-out;
 }
-.navbar-brand{
+.navbar-brand {
 	position: relative;
 }
-.navbar-nav{
+.navbar-nav {
 	position: relative;
 }
 .focus-border {
@@ -30,31 +30,28 @@ a {
 	left: 0;
 	height: 2px;
 	background-color: white;
-	
 }
-.dark1{
+.dark1 {
 	background-color: $dark1;
 }
-.dark2{
+.dark2 {
 	background-color: $dark2;
 }
-.light1{
+.light1 {
 	color: $light1;
 }
-.light2{
+.light2 {
 	color: $light2;
 }
-.primary{
+.primary {
 	background-color: $primary;
 }
-.secondary{
+.secondary {
 	background-color: $secondary;
 }
-.ternary{
+.ternary {
 	background-color: $ternary;
 }
-
-
 
 .alert {
 	padding: 10px;
@@ -82,15 +79,15 @@ a {
 		display: block;
 		width: 100%;
 		text-align: center;
-		img{
-		@extend .mb-2;
-		@extend .rounded;
-		@extend .shadow;
-		@extend .img-thumbnail;
+		img {
+			@extend .mb-2;
+			@extend .rounded;
+			@extend .shadow;
+			@extend .img-thumbnail;
 		}
 	}
-	
-	.form-check{
+
+	.form-check {
 		padding: 0;
 		@extend .mt-3;
 		text-align: center;
@@ -98,31 +95,36 @@ a {
 		.form-check-label {
 			cursor: pointer;
 		}
-		#card_imageFile_delete{
+		#card_imageFile_delete {
 			position: absolute;
-			top: -100000px;
+			top: -10000px;
 		}
 	}
 }
 
 .indexCard {
-	background-color: rgba(255, 255, 255, 0.774);
-	.imgContainer{
-		width: auto;
+	background-color: $opaque;
+	color: $light1;
+	.imgContainer {
+		width: 300px;
+		height: 300px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 		overflow: hidden;
-		img{
+		img {
 			transition: 0.5s ease-out;
 		}
 	}
-	&:hover{
-		img{
+	&:hover {
+		img {
 			transform: scale(1.2);
 		}
 	}
 }
 
-#cardShow, #cardEdit, #cardCreate {
+#cardShow,
+#cardEdit,
+#cardCreate {
 	background-color: rgba(255, 255, 255, 0.774);
 }
-
-
