@@ -3,28 +3,66 @@
 {% block title card.title %}
 
 {% block body %}
-	<article id="cardShow" class="col-12 border border-white rounded shadow">
-		<h1 class="text-center border-bottom border-dark p-2">{{ card.title|capitalize }}</h1>
-		<img class="card-img"
-			          src="{{(
-			          card.imageName
-			            ? vich_uploader_asset(card)
-			            : asset('images/placeholder.jpg'))
-			          }}"
-			          alt="{{ card.title }}" />
-		<p class="p-2">{{card.description}}</p>	
-	</article>
- 
-	<div class="buttonsDiv mt-5 m-2">
-		<a class="btn btn-info" href="{{path('app_card_edit', {id: card.id} )}}">Modifier</a> 
-		<a class="btn btn-danger" href="#"
-			onclick="event.preventDefault(); confirm('Are you sure ?') && document.getElementById('js-card-delete-form').submit();"
-			>Supprimer</a>
+  <article id="cardShow" class="col-12 border border-white rounded shadow">
+    <h1 class="text-center border-bottom border-dark p-2">
+      {{ card.title|capitalize }}
+    </h1>
+	<div class="imgContainer card-img m-2">
+    <img class="card-img"
+      src="{{
+      card.imageName
+        ? vich_uploader_asset(card)
+        : asset('build/images/placeholder.jpg')
+      }}"
+      alt="{{ card.title }}" />
 	</div>
-	
-	<form id="js-card-delete-form" action="{{path('app_card_delete', {id: card.id}) }}" method="POST" style="display:none;">
-		<input type="hidden" name="csrf_token" value="{{ csrf_token('card_deletion_' ~ card.id) }}">
-		<input type="hidden" name="_method" value="DELETE">
-		<input type="submit" value="Delete">
-	</form>
+    <p class="p-2">
+      {{ card.description }}
+    </p>
+    <div class="mt-auto d-flex justify-content-end align-items-end">
+      <i>
+        <small>
+          Ajouté par [owner full name] |
+          <time datetime="{{ card.createdAt|date('Y-m-d H:i:s')}}">{{ card.createdAt|ago }}</time>
+        </small>
+      </i>
+    </div>
+  </article>
+
+  <div class="buttonsDiv mt-5 m-2">
+    <a class="btn btn-pale"
+      href="{{
+      path(
+        'app_card_edit',
+        {
+          id: card.id
+        }
+      )
+      }}">
+      Modifier
+    </a>
+    <a class="btn btn-pale"
+      href="#"
+      onclick="event.preventDefault(); confirm('Vous allez supprimer cette carte, êtes-vous sûr ?') && document.getElementById('js-card-delete-form').submit();">
+      Supprimer
+    </a>
+  </div>
+
+  <form id="js-card-delete-form"
+    action="{{
+    path(
+      'app_card_delete',
+      {
+        id: card.id
+      }
+    )
+    }}"
+    method="POST"
+    style="display:none;">
+    <input type="hidden"
+      name="csrf_token"
+      value="{{ csrf_token('card_deletion_' ~ card.id) }}" />
+    <input type="hidden" name="_method" value="DELETE" />
+    <input type="submit" value="Delete" />
+  </form>
 {% endblock %}

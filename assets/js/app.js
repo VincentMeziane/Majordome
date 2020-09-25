@@ -15,7 +15,7 @@ import 'bootstrap';
 
 
 // Gestion du bouton "supprimer l'image - Formulaire d'édition de carte"
-$('.form-check-label').addClass('btn').addClass('btn-danger')
+$('.form-check-label').addClass('btn').addClass('btn-pale')
 $('.custom-file-input').on('change', function(e){
 	var inputFile = e.currentTarget;
 	$('~.custom-file-label',inputFile).text(inputFile.files[0].name);
@@ -26,12 +26,12 @@ $(' .form-check-label', '.vich-image').on('click', function(e){
 	if(checked === false)
 	{
 		$('#card_imageFile_delete').prop('checked', true)
-		$('.form-check-label').removeClass('btn-danger').html("<i>L'image sera supprimée à l'enregistrement</i><br><small class='btn btn-info' style='padding:0.2em; margin-top:1em;'>Annuler</small>");
+		$('.form-check-label').removeClass('btn-pale').html("<i>L'image sera supprimée à l'enregistrement</i><br><small class='btn btn-pale' style='padding:0.2em; margin-top:1em;'>Annuler</small>");
 	}
 	else
 	{
 		$('#card_imageFile_delete').prop('checked', false)
-		$('.form-check-label').addClass('btn-danger').text("Supprimer l'image");
+		$('.form-check-label').addClass('btn-pale').text("Supprimer l'image");
 	}
 })
 
@@ -61,4 +61,22 @@ function fn2(e){
 		width: 0
 	})
 }
-$(underlined).on("mouseenter", fn1).on("mouseleave", fn2)
+$(underlined).on("mouseenter", fn1).on("mouseleave", fn2);
+
+$(document).ready(function () {
+	if($('.alert').length >0)
+	{	
+		var decompte = 2;
+		decomptage()
+		function decomptage(){
+			decompte--;
+			console.log(decompte);
+			if(decompte == 0){
+				$('.alert').fadeOut(2000)
+			}
+			else{
+				var rappel = setTimeout(decomptage, 1000)
+			}
+		}
+	}
+});

@@ -52,6 +52,26 @@ a {
 .ternary {
 	background-color: $ternary;
 }
+.btn-yellow {
+	color: $primary;
+	border: 1px $light1 solid;
+	transition: 0.5s ease-in-out;
+	&:hover {
+		background-color: $primary;
+		color: $opaque;
+	}
+}
+
+.btn-pale{
+	color: $light1;
+	border: 1px $primary solid;
+	transition: 0.5s ease-in-out;
+	&:hover {
+		background-color: $primary;
+		color: $dark1;
+	}
+}
+
 
 .alert {
 	padding: 10px;
@@ -62,9 +82,11 @@ a {
 	border-radius: 0;
 	&.alert-success {
 		background-color: $light1;
+		color: $dark1;
 	}
 	&.alert-error {
-		background-color: $light2;
+		background-color: $secondary;
+		color: $light1;
 	}
 	&.alert-info {
 		background-color: #cccc75;
@@ -126,5 +148,19 @@ a {
 #cardShow,
 #cardEdit,
 #cardCreate {
-	background-color: rgba(255, 255, 255, 0.774);
+	background-color: $opaque;
+	color: $light1;
+	i{
+		color: $primary;
+	}
+}
+
+#cardShow {
+	.imgContainer{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		min-width: 350px;
+		min-height: 350px;
+	}
 }
