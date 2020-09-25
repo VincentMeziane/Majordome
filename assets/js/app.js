@@ -70,7 +70,6 @@ $(document).ready(function () {
 		decomptage()
 		function decomptage(){
 			decompte--;
-			console.log(decompte);
 			if(decompte == 0){
 				$('.alert').fadeOut(2000)
 			}
