@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Card;
+use App\Entity\User;
+use Doctrine\DBAL\Types\ObjectType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Vich\UploaderBundle\Form\Type\VichImageType;
@@ -36,6 +38,7 @@ class CardType extends AbstractType
             ])
             ->add('title')
             ->add('description')
+            ->add('user')
         ;
     }
 

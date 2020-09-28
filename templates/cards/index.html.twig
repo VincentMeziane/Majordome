@@ -38,7 +38,7 @@
             {{ card.description|u.truncate(10, '...', false) }}
           </p>
           <div class="mt-auto d-flex justify-content-end align-items-end">
-				<i><small>Ajouté par [owner full name] | 
+				<i><small>Ajouté par {{card.user}} | 
 				{{ card.createdAt|ago }}</small></i>
           </div>
         </div>
