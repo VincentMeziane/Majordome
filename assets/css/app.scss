@@ -85,7 +85,11 @@ a {
 		color: $dark1;
 	}
 	&.alert-error {
-		background-color: $secondary;
+		background-color: $light2;
+		color: $light1;
+	}
+	&.alert-danger {
+		background-color: $light2;
 		color: $light1;
 	}
 	&.alert-info {

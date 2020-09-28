@@ -63,6 +63,8 @@ function fn2(e){
 }
 $(underlined).on("mouseenter", fn1).on("mouseleave", fn2);
 
+
+// Disparition automatique des alertes après 2s
 $(document).ready(function () {
 	if($('.alert').length >0)
 	{	
@@ -71,7 +73,10 @@ $(document).ready(function () {
 		function decomptage(){
 			decompte--;
 			if(decompte == 0){
-				$('.alert').fadeOut(2000)
+				$('.alert').slideUp(1200, function(){
+					$(this).remove();
+				})
+
 			}
 			else{
 				var rappel = setTimeout(decomptage, 1000)
