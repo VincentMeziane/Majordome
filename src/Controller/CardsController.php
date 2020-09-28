@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Card;
 use App\Form\CardType;
 use App\Repository\CardRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,7 +34,7 @@ class CardsController extends AbstractController
     /**
      * @Route("/card/create", name="app_card_create" , methods="GET|POST")
      */
-    public function create(Request $request, EntityManagerInterface $em): Response
+    public function create(Request $request, EntityManagerInterface $em, UserRepository $userRepository): Response
     {
         $card = new Card;
         $form = $this->createForm(CardType::class, $card);
@@ -41,6 +42,8 @@ class CardsController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $janeDoe = $userRepository->findOneBy(['email' => 'JaneDoe@example.com']);
+            $card->setUser($janeDoe);
             $em->persist($card);
             $em->flush();
 

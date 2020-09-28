@@ -38,7 +38,6 @@ class CardType extends AbstractType
             ])
             ->add('title')
             ->add('description')
-            ->add('user')
         ;
     }
 
