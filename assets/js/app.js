@@ -84,3 +84,19 @@ $(document).ready(function () {
 		}
 	}
 });
+
+$('.rememberMeLabel').on('click', function(){
+	var $checked = $('#_remember_me').is(":checked");
+	if($checked === false){
+		$('#rememberMeSpan').css({
+			'background-color': 'rgb(255, 255, 36)',
+			'border': '2px white solid'
+		})
+	}
+	else{
+		$('#rememberMeSpan').css({
+			'background': 'none',
+			'border': '1px rgb(255, 255, 36) solid'
+		})
+	}
+})
