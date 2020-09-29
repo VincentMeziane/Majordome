@@ -169,8 +169,22 @@ a {
 	}
 }
 
-#rememberMeSpan{
+#rememberMeSpan, #registerSpan{
 	width: 15px;
 	height: 15px;
 	border: 1px $primary solid;
+}
+
+.form-check-label{
+	cursor:pointer;
+}
+
+#registerSpan {
+	position: absolute;
+	top: 25%;
+	left: 0;
+	
+}
+#registration_form_agreeTerms {
+	visibility: hidden;
 }

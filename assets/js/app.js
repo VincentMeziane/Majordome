@@ -15,7 +15,7 @@ import 'bootstrap';
 
 
 // Gestion du bouton "supprimer l'image - Formulaire d'édition de carte"
-$('.form-check-label').addClass('btn').addClass('btn-pale')
+$('.form-check-label', '#cardEdit').addClass('btn').addClass('btn-pale')
 $('.custom-file-input').on('change', function(e){
 	var inputFile = e.currentTarget;
 	$('~.custom-file-label',inputFile).text(inputFile.files[0].name);
@@ -83,8 +83,16 @@ $(document).ready(function () {
 			}
 		}
 	}
+
+	if($('#registration_form_agreeTerms').length > 0)
+	{
+		var span = document.createElement('div');
+		span.setAttribute('id', 'registerSpan');
+		$('label', '.form-check').append(span);
+	}
 });
 
+// Modification des checkboxes
 $('.rememberMeLabel').on('click', function(){
 	var $checked = $('#_remember_me').is(":checked");
 	if($checked === false){
@@ -95,6 +103,22 @@ $('.rememberMeLabel').on('click', function(){
 	}
 	else{
 		$('#rememberMeSpan').css({
+			'background': 'none',
+			'border': '1px rgb(255, 255, 36) solid'
+		})
+	}
+})
+$('+label', '#registration_form_agreeTerms').on('click', function(){
+	var $checked = $('#registration_form_agreeTerms').is(":checked");
+	console.log($checked);
+	if($checked === false){
+		$('#registerSpan').css({
+			'background-color': 'rgb(255, 255, 36)',
+			'border': '2px white solid'
+		})
+	}
+	else{
+		$('#registerSpan').css({
 			'background': 'none',
 			'border': '1px rgb(255, 255, 36) solid'
 		})
