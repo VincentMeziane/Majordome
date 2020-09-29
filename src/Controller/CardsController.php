@@ -42,8 +42,7 @@ class CardsController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $janeDoe = $userRepository->findOneBy(['email' => 'JaneDoe@example.com']);
-            $card->setUser($janeDoe);
+            $card->setUser($this->getUser());
             $em->persist($card);
             $em->flush();
 
