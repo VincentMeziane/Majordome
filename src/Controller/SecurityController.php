@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Form\UserType;
 use Doctrine\ORM\EntityManager;
 use App\Repository\CardRepository;
+use App\Repository\UserRepository;
 use App\Security\LoginFormAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,7 +34,7 @@ class SecurityController extends AbstractController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+        return $this->render('security/login.html.twig', ['user' => $this->getUser(), 'last_username' => $lastUsername, 'error' => $error]);
     }
 
     /**
@@ -44,18 +46,17 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/account", name="app_account")
+     * @Route("/account/{id<[0-9]+>}", name="app_account")
      */
-    public function showAccount(EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder, Request $request, CardRepository $cardRepository)
+    public function showAccount(User $user,EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder, Request $request, CardRepository $cardRepository)
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
         // Récupère l'id dans la session
-        if ($this->getUser()) {
-            $user = $this->getUser();
-            $userCards = $cardRepository->findBy([
-                'user' => $user
-            ]);
-            
+        $userCards = $cardRepository->findBy([
+            'user' => $user
+        ]);
+        
+        if ($this->getUser()->getId() == $user->getId()) {
             $form = $this->createForm(UserType::class);
             if($request->isMethod('POST')){
                 $plainPassword = $request->request->get('user')['plainPassword'];
@@ -65,8 +66,10 @@ class SecurityController extends AbstractController
                 {
                 $error = "Le mot de passe n'est pas valide";
                 return $this->render('security/account.html.twig', [
-                    'user' => $user,
+                    'user' => $this->getUser(),
+                    'thisuser' => $user,
                     'cards' => $userCards,
+                    'author' => 'true',
                     'form' => $form->createView(),
                     'error' => $error
                 ]);
@@ -75,17 +78,26 @@ class SecurityController extends AbstractController
                 // mettre les infos dans user
                 $user->setFirstName($request->request->get('user')['firstName']);
                 $user->setLastName($request->request->get('user')['lastName']);
-                $user->setEmail($request->request->get('user')['email']);
                 $em->persist($user);
                 $em->flush();
-                $this->addFlash('succes', 'Vos modifications ont été prises en compte');      
+                $this->addFlash('success', 'Vos modifications ont été prises en compte');      
             }
             
             }
             return $this->render('security/account.html.twig', [
-                'user' => $user,
+                'user' => $this->getUser(),
+                'thisuser' => $user,
                 'cards' => $userCards,
                 'form' => $form->createView(),
+                'author' => 'true'
+            ]);
+        }
+        else{
+            return $this->render('security/account.html.twig', [
+                'user' => $this->getUser(),
+                'thisuser' => $user,
+                'cards' => $userCards,
+                'author' => 'false',
             ]);
         }
         // Affiche une vue et lui passe user

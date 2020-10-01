@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Card;
+use App\Entity\User;
 use App\Form\CardType;
 use App\Repository\CardRepository;
 use App\Repository\UserRepository;
@@ -14,13 +15,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CardsController extends AbstractController
 {
+    
     /**
      * @Route("/", name="app_home", methods="GET")
      */
     public function index(CardRepository $cardRepository): Response
     {
         $cards = $cardRepository->findBy([], ['createdAt' => 'DESC']);
-        return $this->render('cards/index.html.twig', compact('cards'));
+        return $this->render('cards/index.html.twig',[
+            'user' => $this->getUser(),
+            'cards' => $cards,
+            'author' => 'true'
+            ]);
     }
 
     /**
@@ -28,7 +34,23 @@ class CardsController extends AbstractController
      */
     public function show(Card $card): Response
     {
-        return $this->render('cards/show.html.twig', compact('card'));
+        $reader = $this->getUser()->getId();
+        $author = $card->getUser()->getId();
+        if($reader === $author){
+            return $this->render('cards/show.html.twig', [
+                'user' => $this->getUser(),
+                'card' => $card,
+                'author' => 'true'
+                ]);
+        }
+        else
+        {
+            return $this->render('cards/show.html.twig', [
+                'user' => $this->getUser(),
+                'card' => $card,
+                'author' => 'false'
+                ]);
+        }
     }
 
     /**
@@ -50,7 +72,10 @@ class CardsController extends AbstractController
 
             return $this->redirectToRoute('app_home');
         } else {
-            return $this->render('cards/create.html.twig', ['formulaire' => $form->createView()]);
+            return $this->render('cards/create.html.twig', [
+                'user' => $this->getUser(),
+                'formulaire' => $form->createView()
+                ]);
         }
     }
 
@@ -76,6 +101,7 @@ class CardsController extends AbstractController
         }
 
         return $this->render('cards/edit.html.twig', [
+            'user' => $this->getUser(),
             'formulaire' => $form->createView(),
             'card' => $card
         ]);

@@ -2,8 +2,8 @@
 	<div class="container">
 		<a class="navbar-brand light1 underline" href="{{path('app_home')}}">Majordome<span class="focus-border"></span></a>
 		
-		<button class="navbar-toggler " data-target="#my-nav" data-toggle="collapse" aria-controls="my-nav" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
+		<button class="navbar-toggler p-1" data-target="#my-nav" data-toggle="collapse" aria-controls="my-nav" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon light1"><i class="fas fa-bars h2"></i></span>
 		</button>
 		<div id="my-nav" class="collapse navbar-collapse">
 			<ul class="navbar-nav ml-auto underline">
@@ -14,9 +14,9 @@
 					</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link light2" href="{{path('app_account')}}" title="Mon compte">
+					<a class="nav-link light2" href="{{path('app_account', {id:user.id} )}}" title="Mon compte">
 						<span>
-							{{app.user.username}}
+							{{app.user}}
 						</span>
 					</a>
 				</li>
