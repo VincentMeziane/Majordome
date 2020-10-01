@@ -18,6 +18,10 @@ img {
 a {
 	transition: 0.3s ease-in-out;
 }
+ul{
+	padding: 0;
+	list-style-type: none;
+}
 .underline {
 	border-bottom: 1px white solid;
 	transition: 0.3s ease-in-out;
@@ -57,12 +61,28 @@ a {
 	background-color: $ternary;
 }
 .btn-yellow {
+	color: $dark1;
+	background-color: $primary;
+	border: 1px $light1 solid;
+	transition: 0.2s ease-in-out;
+	&:hover {
+		box-shadow: inset 0 0 10px #000000;
+	}
+}
+
+.btn-sub{
 	color: $primary;
 	border: 1px $light1 solid;
+	background-color: $opaque;
 	transition: 0.5s ease-in-out;
+	border-radius: 0 0 10px 10px;
+	border-top: none;
 	&:hover {
 		background-color: $primary;
-		color: $opaque;
+		color: $dark1;
+	}
+	.subscribeIcon{
+		transform: translateY(2.2px);
 	}
 }
 .opaque {

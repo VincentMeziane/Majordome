@@ -35,8 +35,7 @@
 			</a>
 		</div>
 	{% else %}
-		<a href="{{path('app_account', {id:card.user.id})}}" class="btn btn-pale m-5 p-3">Toutes les cartes de
-			{{card.user}}<br><i class="fas fa-arrow-right"></i></a>
+		<a href="{{path('app_account', {id:card.user.id})}}" class="btn btn-yellow m-5 p-3 pl-5 pr-5">{{card.user}}<br><i class="fas fa-arrow-right"></i></a>
 	{% endif %}
 
 	<form id="js-card-delete-form" action="{{ path( 'app_card_delete', { id: card.id } ) }}" method="POST" style="display:none;">

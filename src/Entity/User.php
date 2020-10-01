@@ -70,9 +70,21 @@ class User implements UserInterface
      */
     private $isVerified = false;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="users")
+     */
+    private $subscription;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="subscription")
+     */
+    private $users;
+
     public function __construct()
     {
         $this->cards = new ArrayCollection();
+        $this->subscription = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -221,6 +233,57 @@ class User implements UserInterface
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    
+    public function getSubscription() : array
+    {
+        return $this->subscription->getValues();
+    }
+
+    public function addSubscription(self $subscription): self
+    {
+        if (!$this->subscription->contains($subscription)) {
+            $this->subscription[] = $subscription;
+        }
+       
+
+        return $this;
+    }
+
+    public function removeSubscription(self $subscription): self
+    {
+        if ($this->subscription->contains($subscription)) {
+            $this->subscription->removeElement($subscription);
+        }
+
+        return $this;
+    }
+
+    
+    public function getUsers(): array
+    {
+        return $this->users->getValues();
+    }
+
+    public function addUser(self $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->addSubscription($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(self $user): self
+    {
+        if ($this->users->contains($user)) {
+            $this->users->removeElement($user);
+            $user->removeSubscription($this);
+        }
 
         return $this;
     }

@@ -1,55 +1,48 @@
 {% extends '/layouts/base.html.twig' %}
 
 {% block title %}
-  Majordome
+	Majordome
 {% endblock %}
 
 {% block body %}
-  {% if (cards|length) > 0 %}
-    <h1 class="text-center col-12 light1">
-      {{cards|length}} {{ pluralize(cards|length, 'Carte') }} trouvées
-    </h1>
+	{% if (cards|length) > 0 %}
+		<h1 class="text-center col-12 light1">
+			{{cards|length}}
+			{{ pluralize(cards|length, 'Carte') }}
+			trouvées
+		</h1>
 
-    {% for card in cards %}
-      <div data-path="{{
-        path(
-          'app_card_show',
-          {
-            id: card.id
-          }
-        )
-        }}"
-        class="indexCard card m-2 p-0 col-auto"
-        style="cursor:pointer">
-        <div class="imgContainer card-img m-2">
-          <img src="{{ (card.imageName
-              ? vich_uploader_asset(card)
-              : asset('build/images/placeholder.jpg'))|imagine_filter(
-              'square_thumbnail_medium'
-            ) }}"
-            alt="{{ card.title }}"  />
-        </div>
+		{% for card in cards %}
+			<div data-path="{{ path( 'app_card_show', { id: card.id } ) }}" class="indexCard card m-2 p-0 col-auto" style="cursor:pointer">
+				<div class="imgContainer card-img m-2">
+					<img src="{{ (card.imageName ? vich_uploader_asset(card) : asset('build/images/placeholder.jpg'))|imagine_filter( 'square_thumbnail_medium' ) }}" alt="{{ card.title }}"/>
+				</div>
 
-        <div class="card-body d-flex flex-column justify-content-start">
-          <h5 class="card-title">
-            {{ card.title }}
-          </h5>
-          <p class="card-text">
-            {{ card.description|u.truncate(10, '...', false) }}
-          </p>
-          <div class="mt-auto d-flex justify-content-end align-items-end">
-				<i><small>Ajouté par {{card.user}} | 
-				{{ card.createdAt|ago }}</small></i>
-          </div>
-        </div>
-        <!-- fermeture : card infos -->
-      </div>
-      <!-- fermeture : card -->
-    {% endfor %}
-  {% else %}
-    <p class="col-12 text-center">
-      Aucune carte pour l'instant.
-    </p> <a href="{{ path('app_card_create') }}" class="btn btn-success">Créer
-      une nouvelle carte</a>
-  {% endif %}
+				<div class="card-body d-flex flex-column justify-content-start">
+					<h5 class="card-title">
+						{{ card.title }}
+					</h5>
+					<p class="card-text">
+						{{ card.description|u.truncate(10, '...', false) }}
+					</p>
+					<div class="mt-auto d-flex justify-content-end align-items-end">
+						<i>
+							<small>Ajouté par
+								{{card.user}}
+								|
+								{{ card.createdAt|ago }}</small>
+						</i>
+					</div>
+				</div>
+				<!-- fermeture : card infos -->
+			</div>
+			<!-- fermeture : card -->
+		{% endfor %}
+	{% else %}
+		<p class="col-12 text-center">
+			Aucune carte pour l'instant.
+		</p>
+		<a href="{{ path('app_card_create') }}" class="btn btn-success">Créer
+			      une nouvelle carte</a>
+	{% endif %}
 {% endblock %}

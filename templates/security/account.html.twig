@@ -5,9 +5,21 @@
 {% endblock %}
 
 {% block body %}
+	<div class="row col-12 d-flex justify-content-center m-4">
+		<h1 class="primary rounded p-3 pl-5 pr-5  mb-0">{{thisuser}}</h1>
+		{% if thisuser.id is not same as(user.id) and hasSubscribed == 'false' %}
+			<div class="col-12 text-center">
+				<a href="{{path('app_subscribe', {id: thisuser.id})}}" class="btn btn-sub">
+					<p class="m-0">S'abonner
+						<i class="fas fa-plus-square subscribeIcon"></i>
+					</p>
+				</a>
+			</div>
+			{% else %}
+		{% endif %}
+	</div>
 	{% if (cards|length) > 0 %}
-		<h1 class="primary rounded p-3 pl-5 pr-5 m-4">{{thisuser}}</h1>
-		<section class="vosCartes row col-12 m-3">
+		<section class="vosCartes row col-12 m-3 d-flex justify-content-center">
 
 			{% for card in cards %}
 				<div data-path="{{ path( 'app_card_show', { id: card.id } ) }}" class="indexCard card m-2 p-0 col-auto" style="cursor:pointer">
@@ -33,14 +45,22 @@
 				<!-- fermeture : card -->
 			{% endfor %}
 		{% else %}
-			<p class="col-12 text-center">
-				Aucune carte pour l'instant.
-			</p>
-			<a href="{{ path('app_card_create') }}" class="btn btn-success">Créer
-														      une nouvelle carte</a>
+			<h2>Aucune carte pour l'instant</h2>
 		{% endif %}
 	</section>
 	{% if author is defined and author == 'true' %}
+		<section class="vosAbonnements row col-9 m-3 light1 d-flex justify-content-center">
+			<h2>Vos abonnements</h2>
+			<ul class="row col-12 d-flex justify-content-center">
+				{% for item in subscriptions %}
+					<li>
+						<a href="{{path('app_account', {
+							id: item.id
+						})}}" class="btn btn-pale">{{item}}</a>
+					</li>
+				{% endfor %}
+			</ul>
+		</section>
 		<section class="vosInfos row col-12 m-3">
 			<form method="POST" class="col-6 m-auto light1" novalidate>
 
