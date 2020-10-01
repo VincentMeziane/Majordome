@@ -61,6 +61,9 @@ a {
 		color: $opaque;
 	}
 }
+.opaque {
+	background-color: $opaque;
+}
 
 .btn-pale{
 	color: $light1;
@@ -193,4 +196,15 @@ a {
 	form {
 		@extend .col-6, .m-auto;
 	}
+}
+
+// Erreurs
+.form-error-message{
+	color: $primary;
+}
+.form-check-input.is-invalid ~ .form-check-label{
+	color: $light1;
+}
+.form-error-icon{
+	display: none;
 }

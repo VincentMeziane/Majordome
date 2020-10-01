@@ -7,7 +7,7 @@
 {% block body %}
   {% if (cards|length) > 0 %}
     <h1 class="text-center col-12 light1">
-      {{ pluralize(cards|length, 'Carte') }} trouvées
+      {{cards|length}} {{ pluralize(cards|length, 'Carte') }} trouvées
     </h1>
 
     {% for card in cards %}

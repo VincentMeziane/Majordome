@@ -30,6 +30,6 @@ class AppExtension extends AbstractExtension
         $plural ??= $singular .'s';
         $str = $count === 1 ? $singular : $plural;
 
-        return "$count $str";
+        return "$str";
     }
 }

@@ -2,10 +2,18 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Form\UserType;
+use Doctrine\ORM\EntityManager;
+use App\Repository\CardRepository;
+use App\Security\LoginFormAuthenticator;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class SecurityController extends AbstractController
 {
@@ -33,5 +41,53 @@ class SecurityController extends AbstractController
     public function logout()
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+    }
+
+    /**
+     * @Route("/account", name="app_account")
+     */
+    public function showAccount(EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder, Request $request, CardRepository $cardRepository)
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+        // Récupère l'id dans la session
+        if ($this->getUser()) {
+            $user = $this->getUser();
+            $userCards = $cardRepository->findBy([
+                'user' => $user
+            ]);
+            
+            $form = $this->createForm(UserType::class);
+            if($request->isMethod('POST')){
+                $plainPassword = $request->request->get('user')['plainPassword'];
+                $verify = $passwordEncoder->isPasswordValid($user, $plainPassword);
+
+                if(!$verify)
+                {
+                $error = "Le mot de passe n'est pas valide";
+                return $this->render('security/account.html.twig', [
+                    'user' => $user,
+                    'cards' => $userCards,
+                    'form' => $form->createView(),
+                    'error' => $error
+                ]);
+                }
+            else{
+                // mettre les infos dans user
+                $user->setFirstName($request->request->get('user')['firstName']);
+                $user->setLastName($request->request->get('user')['lastName']);
+                $user->setEmail($request->request->get('user')['email']);
+                $em->persist($user);
+                $em->flush();
+                $this->addFlash('succes', 'Vos modifications ont été prises en compte');      
+            }
+            
+            }
+            return $this->render('security/account.html.twig', [
+                'user' => $user,
+                'cards' => $userCards,
+                'form' => $form->createView(),
+            ]);
+        }
+        // Affiche une vue et lui passe user
     }
 }

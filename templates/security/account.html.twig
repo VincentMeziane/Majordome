@@ -1,0 +1,94 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}{{user}}{% endblock %}
+
+{% block body %}
+{% if (cards|length) > 0 %}
+<h1 class="primary rounded p-3 pl-5 pr-5">{{user}}</h1>
+    <section class="vosCartes row col-12 m-3">
+		<h2 class="text-center col-12 light1">
+		      {{ pluralize(cards|length, 'Votre carte', 'Vos cartes') }}
+		    </h2>
+		
+		    {% for card in cards %}
+		      <div data-path="{{
+		        path(
+		          'app_card_show',
+		          {
+		            id: card.id
+		          }
+		        )
+		        }}"
+		        class="indexCard card m-2 p-0 col-auto"
+		        style="cursor:pointer">
+		        <div class="imgContainer card-img m-2">
+		          <img src="{{ (card.imageName
+		              ? vich_uploader_asset(card)
+		              : asset('build/images/placeholder.jpg'))|imagine_filter(
+		              'square_thumbnail_medium'
+		            ) }}"
+		            alt="{{ card.title }}"  />
+		        </div>
+		
+		        <div class="card-body d-flex flex-column justify-content-start">
+		          <h5 class="card-title">
+		            {{ card.title }}
+		          </h5>
+		          <p class="card-text">
+		            {{ card.description|u.truncate(10, '...', false) }}
+		          </p>
+		          <div class="mt-auto d-flex justify-content-end align-items-end">
+						<i><small>{{ card.createdAt|ago }}</small></i>
+		          </div>
+		        </div>
+		        <!-- fermeture : card infos -->
+		      </div>
+		      <!-- fermeture : card -->
+		    {% endfor %}
+		  {% else %}
+		    <p class="col-12 text-center">
+		      Aucune carte pour l'instant.
+		    </p> <a href="{{ path('app_card_create') }}" class="btn btn-success">Créer
+		      une nouvelle carte</a>
+		  {% endif %}
+	</section>
+
+	<section class="vosInfos row col-12 m-3">
+		<form method="POST" class="col-6 m-auto light1" novalidate>
+			{# <h2>Modifier mes informations</h2>
+			<label for="firstName">Prénom</label>
+			<input type="text" value="{{user.firstName}}" name="firstName" id="firstName" class="form-control" required autofocus>
+			<label for="lastName">Nom</label>
+			<input type="text" value="{{user.lastName}}" name="lastName" id="lastName" class="form-control" required autofocus>
+			<label for="email">Email</label>
+			<input type="text" value="{{user.email}}" name="email" id="email" class="form-control" required autofocus>
+			<label for="password">Password</label>
+			<input type="text" value="" name="password" id="password" class="form-control" required autofocus> #}
+			<h2> Modifier vos informations</h2>
+			{{ form_start(form, {attr:{novalidate: true}} )}}
+			<div class="accountModif opaque rounded p-3">
+				{{form_row(form.firstName, {
+					label: 'Prénom',
+					attr: {'value': user.firstName}
+				}
+				)}}
+				{{form_row(form.lastName, {
+					label: 'Nom',
+					attr: {'value': user.lastName}
+				})}}
+			</div>
+			<div class="modifValidate mt-5 d-flex justify-content-center align-items-center flex-wrap">
+				{{ form_row(form.plainPassword, {
+					label: 'Entrez votre mot de passe pour confirmer les modifications'
+				})}}
+				<div class="buttonGroup col-12 row">
+					<button type="submit" class="btn btn-pale m-auto p-3 pl-4 pr-4">Modifier</button>
+				</div>
+			</div>
+			{{ form_end(form) }}
+			{# <button class="btn btn-lg btn-pale mt-3" type="submit">
+            Valider
+        	</button> #}
+		</form>
+	</section>
+{% endblock %}
