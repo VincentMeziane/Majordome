@@ -99,6 +99,20 @@ class UserController extends AbstractController
         $me->addSubscription($user);
         $em->persist($me);
         $em->flush();
+        $this->addFlash('success', "Vous êtes maintenant abonné à cet utilisateur");
+        return $this->redirectToRoute('app_account', ['id' => $user->getId()]);
+    }
+
+    /**
+     * @Route("/unsubscribe/{id<[0-9]+>}", name="app_unsubscribe")
+     */
+    public function unsubscribe(User $user, EntityManagerInterface $em)
+    {
+        $me = $this->getUser();
+        $me->removeSubscription($user);
+        $em->persist($me);
+        $em->flush();
+        $this->addFlash('success', "Vous n'êtes plus abonné à cet utilisateur");
         return $this->redirectToRoute('app_account', ['id' => $user->getId()]);
     }
 }

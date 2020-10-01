@@ -5,17 +5,21 @@
 {% endblock %}
 
 {% block body %}
-	<div class="row col-12 d-flex justify-content-center m-4">
-		<h1 class="primary rounded p-3 pl-5 pr-5  mb-0">{{thisuser}}</h1>
+	<div class="d-flex justify-content-center m-4 position-relative flex-wrap">
+		<div class="col-12">
+			<h1 class="primary rounded p-3 pl-5 pr-5 mb-0 text-center">{{thisuser}}</h1>
+		</div>
 		{% if thisuser.id is not same as(user.id) and hasSubscribed == 'false' %}
-			<div class="col-12 text-center">
 				<a href="{{path('app_subscribe', {id: thisuser.id})}}" class="btn btn-sub">
 					<p class="m-0">S'abonner
 						<i class="fas fa-plus-square subscribeIcon"></i>
 					</p>
 				</a>
-			</div>
-			{% else %}
+		
+		{% elseif thisuser.id is not same as(user.id) %}
+				<a class="unsubscribeIcon" href="{{path('app_unsubscribe', {id: thisuser.id})}}" title="Se désabonner">
+					<i class="far fa-times-circle"></i>
+				</a>
 		{% endif %}
 	</div>
 	{% if (cards|length) > 0 %}
@@ -54,9 +58,7 @@
 			<ul class="row col-12 d-flex justify-content-center">
 				{% for item in subscriptions %}
 					<li>
-						<a href="{{path('app_account', {
-							id: item.id
-						})}}" class="btn btn-pale">{{item}}</a>
+						<a href="{{path('app_account', { id: item.id })}}" class="btn btn-pale">{{item}}</a>
 					</li>
 				{% endfor %}
 			</ul>

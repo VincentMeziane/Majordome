@@ -85,6 +85,12 @@ ul{
 		transform: translateY(2.2px);
 	}
 }
+.unsubscribeIcon{
+	position: absolute;
+	top: 0;
+	right: 1em;
+	color: red;
+}
 .opaque {
 	background-color: $opaque;
 }
