@@ -33,6 +33,7 @@ class RegistrationController extends AbstractController
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
+        // dump($form->isValid());
 
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
@@ -48,13 +49,7 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
 
             // generate a signed url and email it to the user
-            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
-                (new TemplatedEmail())
-                    ->from(new Address('noreply@majordome.fr', 'Majordome'))
-                    ->to($user->getEmail())
-                    ->subject('Veuillez confirmer votre email')
-                    ->htmlTemplate('registration/confirmation_email.html.twig')
-            );
+            $this->confirmEmail();
             // do anything else you need here, like send an email
 
             return $guardHandler->authenticateUserAndHandleSuccess(
@@ -89,6 +84,23 @@ class RegistrationController extends AbstractController
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
         $this->addFlash('success', 'Votre email a été confirmé');
 
+        return $this->redirectToRoute('app_home');
+    }
+
+    /**
+     * @Route("/confirm/email", name="app_confirm_email")
+     */
+    public function confirmEmail()
+    {
+        $user = $this->getUser();
+        $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+                (new TemplatedEmail())
+                    ->from(new Address('noreply@majordome.fr', 'Majordome'))
+                    ->to($user->getEmail())
+                    ->subject('Veuillez confirmer votre email')
+                    ->htmlTemplate('registration/confirmation_email.html.twig')
+            );
+        $this->addFlash('info', "L'email de confirmation a été renvoyé avec succès");
         return $this->redirectToRoute('app_home');
     }
 }

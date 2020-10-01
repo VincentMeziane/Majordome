@@ -22,36 +22,16 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('firstName', null, [
                 'required' => true,
-                'constraints' => [
-                new NotBlank([
-                    'message' => 'Veuillez entrer un prénom',
-                ])
-                ]
             ])
             ->add('lastName', null, [
                 'required' => true,
-                'constraints' => [
-                new NotBlank([
-                    'message' => 'Veuillez entrer un nom',
-                ])
-                ]
             ])
             ->add('email', null, [
                 'required' => true,
-                'constraints' => [
-                new NotBlank([
-                    'message' => 'Veuillez entrer un email',
-                ]),
-                new Email([
-                    'message' => 'Cet email n\'est pas valide',
-                    'mode' => 'strict',
-                    'normalizer' => 'trim'
-                ])
-                ]
-
             ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
+                'required' => true,
                 'constraints' => [
                     new IsTrue([
                         'message' => 'Veuillez acceptez les conditions.',

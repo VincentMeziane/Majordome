@@ -15,18 +15,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CardsController extends AbstractController
 {
-    
+
     /**
      * @Route("/", name="app_home", methods="GET")
      */
     public function index(CardRepository $cardRepository): Response
     {
         $cards = $cardRepository->findBy([], ['createdAt' => 'DESC']);
-        return $this->render('cards/index.html.twig',[
+        return $this->render('cards/index.html.twig', [
             'user' => $this->getUser(),
             'cards' => $cards,
             'author' => 'true'
-            ]);
+        ]);
     }
 
     /**
@@ -34,22 +34,21 @@ class CardsController extends AbstractController
      */
     public function show(Card $card): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $reader = $this->getUser()->getId();
         $author = $card->getUser()->getId();
-        if($reader === $author){
+        if ($reader === $author) {
             return $this->render('cards/show.html.twig', [
                 'user' => $this->getUser(),
                 'card' => $card,
                 'author' => 'true'
-                ]);
-        }
-        else
-        {
+            ]);
+        } else {
             return $this->render('cards/show.html.twig', [
                 'user' => $this->getUser(),
                 'card' => $card,
                 'author' => 'false'
-                ]);
+            ]);
         }
     }
 
@@ -58,6 +57,7 @@ class CardsController extends AbstractController
      */
     public function create(Request $request, EntityManagerInterface $em, UserRepository $userRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $card = new Card;
         $form = $this->createForm(CardType::class, $card);
 
@@ -75,7 +75,7 @@ class CardsController extends AbstractController
             return $this->render('cards/create.html.twig', [
                 'user' => $this->getUser(),
                 'formulaire' => $form->createView()
-                ]);
+            ]);
         }
     }
 
@@ -84,27 +84,30 @@ class CardsController extends AbstractController
      */
     public function edit(Card $card, Request $request, EntityManagerInterface $em): Response
     {
-        $form = $form = $this->createForm(CardType::class, $card, [
-            'method' => 'PUT'
-        ]);
+        $this->denyAccessUnlessGranted('ROLE_USER');
+        if ($this->getUser()->getId() === $card->getUser()->getID()) {
+            $form = $form = $this->createForm(CardType::class, $card, [
+                'method' => 'PUT'
+            ]);
 
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em->flush();
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $em->flush();
 
-            $this->addFlash('success', 'Carte modifiée');
+                $this->addFlash('success', 'Carte modifiée');
+                return $this->redirectToRoute('app_home');
+            } else if ($form->isSubmitted()) {
+                $this->addFlash('error', 'La modification n\'a pas pu être effectuée');
+            }
+
+            return $this->render('cards/edit.html.twig', [
+                'user' => $this->getUser(),
+                'formulaire' => $form->createView(),
+                'card' => $card
+            ]);
+        } else {
             return $this->redirectToRoute('app_home');
         }
-        else if($form->isSubmitted())
-        {
-            $this->addFlash('error', 'La modification n\'a pas pu être effectuée');
-        }
-
-        return $this->render('cards/edit.html.twig', [
-            'user' => $this->getUser(),
-            'formulaire' => $form->createView(),
-            'card' => $card
-        ]);
     }
 
     /**
@@ -112,12 +115,18 @@ class CardsController extends AbstractController
      */
     public function delete(Request $request, Card $card, EntityManagerInterface $em): Response
     {
-        $token = $request->request->get('csrf_token');
-        if ($this->isCsrfTokenValid('card_deletion_' . $card->getId(), $token)) {
-            $em->remove($card);
-            $em->flush();
-            $this->addFlash('info', 'Carte supprimée');
+        $this->denyAccessUnlessGranted('ROLE_USER');
+        if ($this->getUser()->getId() === $card->getUser()->getID()) {
+            $token = $request->request->get('csrf_token');
+            dd($this->getUser()->getId() . '' . $card->getUser()->getID());
+            if ($this->isCsrfTokenValid('card_deletion_' . $card->getId(), $token)) {
+                $em->remove($card);
+                $em->flush();
+                $this->addFlash('info', 'Carte supprimée');
+            }
+            return $this->redirectToRoute('app_home');
+        } else {
+            return $this->redirectToRoute('app_home');
         }
-        return $this->redirectToRoute('app_home');
     }
 }

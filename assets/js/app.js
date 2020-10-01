@@ -68,12 +68,12 @@ $(underlined).on("mouseenter", fn1).on("mouseleave", fn2);
 $(document).ready(function () {
 	if($('.alert').length >0)
 	{	
-		var decompte = 2;
+		var decompte = 5;
 		decomptage()
 		function decomptage(){
 			decompte--;
 			if(decompte == 0){
-				$('.alert').slideUp(1200, function(){
+				$('.alert').slideUp(1500, function(){
 					$(this).remove();
 				})
 

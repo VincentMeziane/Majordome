@@ -22,17 +22,22 @@ class UserController extends AbstractController
         // Récupère l'id dans la session
         $userCards = $cardRepository->findBy([
             'user' => $user
-        ]);
-        $subscriptions = $this->getUser()->getSubscription();
-        $hasSubscribed = 'false';
-        foreach ($subscriptions as $value) {
-            if ($user->getId() == $value->getID()) {
-                $hasSubscribed = 'true';
+            ]);
+            $subscriptions = $this->getUser()->getSubscription();
+            $hasSubscribed = 'false';
+            foreach ($subscriptions as $value) {
+                if ($user->getId() == $value->getID()) {
+                    $hasSubscribed = 'true';
+                }
             }
-        }
-
-        // C'est votre compte
-        if ($this->getUser()->getId() == $user->getId()) {
+            
+            // C'est votre compte
+            if ($this->getUser()->getId() == $user->getId()) {
+                if(!$this->getUser()->isVerified())
+                {
+                    $this->addFlash('error', "Veuillez confirmer votre email avant d'accéder à votre compte");
+                    return $this->render('security/reConfirm.html.twig');
+                }
             $form = $this->createForm(UserType::class);
             // Le formulaire a été soumis et on est revenu sur la page
             if ($request->isMethod('POST')) {

@@ -1,0 +1,13 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}
+	{{app.user}}
+{% endblock %}
+
+{% block body %}
+	<section class="accessDenied light1 row col-12 d-flex flex-wrap">
+		<h1 class="col-12">Accès limité</h1>
+		<p class="col-12">Votre email est en attente de confirmation. Vérifiez votre boite mail (Courriers indésirables)
+		ou demandez le renvoi d'un <a href="{{path('app_confirm_email')}}">email</a></p>
+	</section>
+{% endblock %}
