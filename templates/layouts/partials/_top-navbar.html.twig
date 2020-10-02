@@ -1,49 +1,57 @@
 <nav class="navbar navbar-expand-sm dark1 mb-4">
 	<div class="container">
-		<a class="navbar-brand light1 underline" href="{{path('app_home')}}">Majordome<span class="focus-border"></span></a>
-		
+		<a class="navbar-brand light1 underline" href="{{path('app_home')}}">Majordome<span class="focus-border"></span>
+		</a>
+
 		<button class="navbar-toggler p-1" data-target="#my-nav" data-toggle="collapse" aria-controls="my-nav" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon light1"><i class="fas fa-bars h2"></i></span>
+			<span class="navbar-toggler-icon light1">
+				<i class="fas fa-bars h2"></i>
+			</span>
 		</button>
 		<div id="my-nav" class="collapse navbar-collapse">
 			<ul class="navbar-nav ml-auto underline">
-			{% if app.user %}
-				<li class="nav-item">
-					<a class="nav-link light1" href="{{path('app_card_create')}}" title="Créer une Carte">
-						Nouvelle Carte
-					</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link light2" href="{{path('app_account', {id:app.user.id} )}}" title="Mon compte">
-						<span>
-							{{app.user}}
-						</span>
-					</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link light1" href="{{path('app_logout')}}" title="Déconnexion">
-						<svg width="1.5em" height="1.5em" viewbox="0 0 16 16" class="bi bi-box-arrow-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-							<path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
-							<path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
-						</svg>
-						<small>Déconnexion</small>
-					</a>
-				</li>
-			{% else %}
-				<li class="nav-item">
-					<a class="nav-link light1" href="{{path('app_register')}}" title="s'inscrire">
-						Inscription
-					</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link light1" href="{{path('app_login')}}" title="se connecter">
-						Connexion
-					</a>
-				</li>
-			{% endif %}
+				{% if app.user %}
+					<li class="nav-item">
+						<a class="nav-link light1" href="{{path('app_card_create')}}" title="Créer une Carte">
+							Nouvelle Carte
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link light2" href="{{path('app_account', {id:app.user.id} )}}" title="Mon compte">
+							<span>
+								{{app.user}}
+								{% if notif is defined and notif > 0 %}
+										<small class="badge badge-danger">{{notif}}</small>
+								{% endif %}
+							</span>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link light1" href="{{path('app_logout')}}" title="Déconnexion">
+							<svg width="1.5em" height="1.5em" viewbox="0 0 16 16" class="bi bi-box-arrow-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+								<path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
+								<path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+							</svg>
+							<small>Déconnexion</small>
+						</a>
+					</li>
+				{% else %}
+					<li class="nav-item">
+						<a class="nav-link light1" href="{{path('app_register')}}" title="s'inscrire">
+							Inscription
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link light1" href="{{path('app_login')}}" title="se connecter">
+							Connexion
+						</a>
+					</li>
+				{% endif %}
 				<span class="focus-border"></span>
 			</ul>
-			
-		</div><!-- fermeture : navbar collapse -->
-	</div><!-- fermeture : container navbar -->
+
+		</div>
+		<!-- fermeture : navbar collapse -->
+	</div>
+	<!-- fermeture : container navbar -->
 </nav>

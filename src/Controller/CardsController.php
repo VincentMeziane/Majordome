@@ -5,16 +5,32 @@ namespace App\Controller;
 use App\Entity\Card;
 use App\Entity\User;
 use App\Form\CardType;
+use App\Entity\Notification;
 use App\Repository\CardRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\NotificationRepository;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CardsController extends AbstractController
 {
+    private $notif;
+
+    public function __construct(Security $security, NotificationRepository $notificationRepository)
+    {
+        $notifications = $notificationRepository->findBy([
+            'subscriber' => $security->getUser()
+        ]);
+        
+        $this->notif = 0;
+        foreach ($notifications as $value) {
+            $this->notif = $this->notif + $value->getUnseen();
+        }
+    }
 
     /**
      * @Route("/", name="app_home", methods="GET")
@@ -25,7 +41,8 @@ class CardsController extends AbstractController
         return $this->render('cards/index.html.twig', [
             'user' => $this->getUser(),
             'cards' => $cards,
-            'author' => 'true'
+            'author' => 'true',
+            'notif' => $this->notif
         ]);
     }
 
@@ -41,13 +58,15 @@ class CardsController extends AbstractController
             return $this->render('cards/show.html.twig', [
                 'user' => $this->getUser(),
                 'card' => $card,
-                'author' => 'true'
+                'author' => 'true',
+                'notif' => $this->notif
             ]);
         } else {
             return $this->render('cards/show.html.twig', [
                 'user' => $this->getUser(),
                 'card' => $card,
-                'author' => 'false'
+                'author' => 'false',
+                'notif' => $this->notif
             ]);
         }
     }
@@ -55,9 +74,14 @@ class CardsController extends AbstractController
     /**
      * @Route("/card/create", name="app_card_create" , methods="GET|POST")
      */
-    public function create(Request $request, EntityManagerInterface $em, UserRepository $userRepository): Response
+    public function create(NotificationRepository $notificationRepository, Request $request, EntityManagerInterface $em): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
+        if(!$this->getUser()->isVerified())
+                {
+                    $this->addFlash('error', "Veuillez confirmer votre email avant d'accéder à cette page");
+                    return $this->redirectToRoute('app_home');
+                }
         $card = new Card;
         $form = $this->createForm(CardType::class, $card);
 
@@ -65,10 +89,26 @@ class CardsController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $card->setUser($this->getUser());
+            $notification = $notificationRepository->findBy([
+                'author' => $this->getUser()
+            ]);
+            foreach ($notification as $value) {
+                if($value->getUnseen() === null)
+                {
+                    $value->setUnseen(1);
+                }
+                else{
+                    $notifs = $value->getUnseen();
+                    $notifs++;
+                    $value->setUnseen($notifs);
+                }
+            }
             $em->persist($card);
             $em->flush();
 
             $this->addFlash('success', 'Carte créée');
+            // Incrémenter ou mettre à 1 la valeur de notification pour toutes les notifs ou je suis l'auteur
+
 
             return $this->redirectToRoute('app_home');
         } else {
@@ -103,7 +143,8 @@ class CardsController extends AbstractController
             return $this->render('cards/edit.html.twig', [
                 'user' => $this->getUser(),
                 'formulaire' => $form->createView(),
-                'card' => $card
+                'card' => $card,
+                'notif' => $this->notif
             ]);
         } else {
             return $this->redirectToRoute('app_home');

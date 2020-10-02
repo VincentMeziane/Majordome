@@ -79,12 +79,27 @@ class User implements UserInterface
      */
     private $users;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Notification::class, mappedBy="subscriber", orphanRemoval=true)
+     */
+    private $unseenNotifications;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Notification::class, mappedBy="author", orphanRemoval=true)
+     */
+    private $newNotification;
+
+  
     public function __construct()
     {
         $this->cards = new ArrayCollection();
         $this->subscription = new ArrayCollection();
         $this->users = new ArrayCollection();
+        $this->unseenNotifications = new ArrayCollection();
+        $this->newNotification = new ArrayCollection();
     }
+
+
 
     public function getId(): ?int
     {
@@ -236,55 +251,68 @@ class User implements UserInterface
         return $this;
     }
 
+
+    /**
+     * @return Collection|Notification[]
+     */
+    public function getUnseenNotifications(): Collection
+    {
+        return $this->unseenNotifications;
+    }
+
+    public function addUnseenNotification(Notification $unseenNotification): self
+    {
+        if (!$this->unseenNotifications->contains($unseenNotification)) {
+            $this->unseenNotifications[] = $unseenNotification;
+            $unseenNotification->setSubscriber($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUnseenNotification(Notification $unseenNotification): self
+    {
+        if ($this->unseenNotifications->contains($unseenNotification)) {
+            $this->unseenNotifications->removeElement($unseenNotification);
+            // set the owning side to null (unless already changed)
+            if ($unseenNotification->getSubscriber() === $this) {
+                $unseenNotification->setSubscriber(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Notification[]
+     */
+    public function getNewNotification(): Collection
+    {
+        return $this->newNotification;
+    }
+
+    public function addNewNotification(Notification $newNotification): self
+    {
+        if (!$this->newNotification->contains($newNotification)) {
+            $this->newNotification[] = $newNotification;
+            $newNotification->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNewNotification(Notification $newNotification): self
+    {
+        if ($this->newNotification->contains($newNotification)) {
+            $this->newNotification->removeElement($newNotification);
+            // set the owning side to null (unless already changed)
+            if ($newNotification->getAuthor() === $this) {
+                $newNotification->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
     
-    public function getSubscription() : array
-    {
-        return $this->subscription->getValues();
-    }
-
-    public function addSubscription(self $subscription): self
-    {
-        if (!$this->subscription->contains($subscription)) {
-            $this->subscription[] = $subscription;
-        }
-       
-
-        return $this;
-    }
-
-    public function removeSubscription(self $subscription): self
-    {
-        if ($this->subscription->contains($subscription)) {
-            $this->subscription->removeElement($subscription);
-        }
-
-        return $this;
-    }
-
-    
-    public function getUsers(): array
-    {
-        return $this->users->getValues();
-    }
-
-    public function addUser(self $user): self
-    {
-        if (!$this->users->contains($user)) {
-            $this->users[] = $user;
-            $user->addSubscription($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUser(self $user): self
-    {
-        if ($this->users->contains($user)) {
-            $this->users->removeElement($user);
-            $user->removeSubscription($this);
-        }
-
-        return $this;
-    }
 
 }

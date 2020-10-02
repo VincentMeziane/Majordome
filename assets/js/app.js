@@ -124,3 +124,4 @@ $('+label', '#registration_form_agreeTerms').on('click', function(){
 		})
 	}
 })
+

@@ -33,8 +33,8 @@ class CardType extends AbstractType
                 'download_uri' => true,
                 'image_uri' => true,
                 'asset_helper' => true,
-                'imagine_pattern' => "square_thumbnail_small"
-                // 'constraints' => [new Image($imageFileConstraints)]
+                'imagine_pattern' => "square_thumbnail_small",
+                
             ])
             ->add('title')
             ->add('description')

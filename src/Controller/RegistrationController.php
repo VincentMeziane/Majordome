@@ -49,7 +49,7 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
 
             // generate a signed url and email it to the user
-            $this->confirmEmail();
+            $this->confirmEmail($user);
             // do anything else you need here, like send an email
 
             return $guardHandler->authenticateUserAndHandleSuccess(
@@ -90,9 +90,12 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/confirm/email", name="app_confirm_email")
      */
-    public function confirmEmail()
+    public function confirmEmail($user=null)
     {
-        $user = $this->getUser();
+        if(!isset($user))
+        {
+            $user = $this->getUser();
+        }
         $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
                     ->from(new Address('noreply@majordome.fr', 'Majordome'))
@@ -100,7 +103,7 @@ class RegistrationController extends AbstractController
                     ->subject('Veuillez confirmer votre email')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
-        $this->addFlash('info', "L'email de confirmation a été renvoyé avec succès");
+        $this->addFlash('info', "L'email de confirmation a été envoyé avec succès");
         return $this->redirectToRoute('app_home');
     }
 }

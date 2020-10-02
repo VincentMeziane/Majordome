@@ -20,6 +20,8 @@
 				<a class="unsubscribeIcon" href="{{path('app_unsubscribe', {id: thisuser.id})}}" title="Se désabonner">
 					<i class="far fa-times-circle"></i>
 				</a>
+		{% else %}
+			<h2 class="m-0 light1">Votre profil</h2>
 		{% endif %}
 	</div>
 	{% if (cards|length) > 0 %}
@@ -49,20 +51,28 @@
 				<!-- fermeture : card -->
 			{% endfor %}
 		{% else %}
-			<h2>Aucune carte pour l'instant</h2>
+			<h2 class="row col-12 m-auto  justify-content-center">Aucune carte pour l'instant</h2>
 		{% endif %}
 	</section>
 	{% if author is defined and author == 'true' %}
+	
+	{% if subscriptions|length > 0 %}
 		<section class="vosAbonnements row col-9 m-3 light1 d-flex justify-content-center">
 			<h2>Vos abonnements</h2>
 			<ul class="row col-12 d-flex justify-content-center">
 				{% for item in subscriptions %}
 					<li>
-						<a href="{{path('app_account', { id: item.id })}}" class="btn btn-pale">{{item}}</a>
+						<a href="{{path('app_account', { id: item.author.id })}}" class="btn btn-pale">
+							{{item}}
+							{% if item.unseen > 0 %}
+							<small class="badge badge-danger">{{item.unseen}}</small>
+							{% endif %}
+						</a>
 					</li>
 				{% endfor %}
 			</ul>
 		</section>
+	{% endif %}
 		<section class="vosInfos row col-12 m-3">
 			<form method="POST" class="col-6 m-auto light1" novalidate>
 
@@ -94,6 +104,9 @@
 				})}}
 					<div class="buttonGroup col-12 row">
 						<button type="submit" class="btn btn-pale m-auto p-3 pl-4 pr-4">Modifier</button>
+					</div>
+					<div class="m-2">
+					{{form_row(form.deleteAccount)}}
 					</div>
 				</div>
 				{{ form_end(form) }}
