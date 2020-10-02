@@ -24,7 +24,7 @@ class UserController extends AbstractController
         $notifications = $notificationRepository->findBy([
             'subscriber' => $security->getUser()
         ]);
-        
+
         $this->notif = 0;
         foreach ($notifications as $key => $value) {
             $this->notif = $this->notif + $value->getUnseen();
@@ -43,7 +43,7 @@ class UserController extends AbstractController
         $notifications = $notificationRepository->findBy([
             'subscriber' => $this->getUser()
         ]);
-               
+
 
         $hasSubscribed = 'false';
         foreach ($notifications as $value) {
@@ -54,7 +54,7 @@ class UserController extends AbstractController
 
         // C'est votre compte
         if ($this->getUser()->getId() == $user->getId()) {
-            
+
             if (!$this->getUser()->isVerified()) {
                 $this->addFlash('error', "Veuillez confirmer votre email avant d'accéder à votre compte");
                 return $this->render('security/reConfirm.html.twig');
@@ -112,13 +112,19 @@ class UserController extends AbstractController
         // Ce n'est pas votre compte
         else {
             // Remettre à 0 unseen dans la bdd
+            if (!$this->getUser()->isVerified()) {
+                $this->addFlash('error', "Veuillez confirmer votre email avant d'accéder à cette page");
+                return $this->render('security/reConfirm.html.twig');
+            }
             $notification = $notificationRepository->findOneBy([
                 'author' => $user,
                 'subscriber' => $this->getUSer()
             ]);
-            $notification->setUnseen(0);
-            $em->persist($notification);
-            $em->flush();
+            if ($notification) {
+                $notification->setUnseen(0);
+                $em->persist($notification);
+                $em->flush();
+            }
 
             return $this->render('security/account.html.twig', [
                 'user' => $this->getUser(),

@@ -1,10 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Neuton&display=swap");
 @import "shared/variables";
 @import "~bootstrap";
-@import '~@fortawesome/fontawesome-free/scss/fontawesome';
-@import '~@fortawesome/fontawesome-free/scss/regular';
-@import '~@fortawesome/fontawesome-free/scss/solid';
-@import '~@fortawesome/fontawesome-free/scss/brands';
+@import "~@fortawesome/fontawesome-free/scss/fontawesome";
+@import "~@fortawesome/fontawesome-free/scss/regular";
+@import "~@fortawesome/fontawesome-free/scss/solid";
+@import "~@fortawesome/fontawesome-free/scss/brands";
 
 html,
 body {
@@ -18,7 +18,7 @@ img {
 a {
 	transition: 0.3s ease-in-out;
 }
-ul{
+ul {
 	padding: 0;
 	list-style-type: none;
 }
@@ -70,7 +70,7 @@ ul{
 	}
 }
 
-.btn-sub{
+.btn-sub {
 	color: $primary;
 	border: 1px $light1 solid;
 	background-color: $opaque;
@@ -81,11 +81,11 @@ ul{
 		background-color: $primary;
 		color: $dark1;
 	}
-	.subscribeIcon{
+	.subscribeIcon {
 		transform: translateY(2.2px);
 	}
 }
-.unsubscribeIcon{
+.unsubscribeIcon {
 	position: absolute;
 	top: 0;
 	right: 1em;
@@ -96,7 +96,7 @@ ul{
 	background-color: $opaque;
 }
 
-.btn-pale{
+.btn-pale {
 	color: $light1;
 	border: 1px $primary solid;
 	transition: 0.5s ease-in-out;
@@ -105,7 +105,6 @@ ul{
 		color: $dark1;
 	}
 }
-
 
 .alert {
 	padding: 10px;
@@ -182,19 +181,24 @@ ul{
 		}
 	}
 }
-
+.card-text {
+	max-width: 250px;
+}
+.word-wrap {
+	word-wrap: break-word;
+}
 #cardShow,
 #cardEdit,
 #cardCreate {
 	background-color: $opaque;
 	color: $light1;
-	i{
+	i {
 		color: $primary;
 	}
 }
 
 #cardShow {
-	.imgContainer{
+	.imgContainer {
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -203,21 +207,21 @@ ul{
 	}
 }
 
-#rememberMeSpan, #registerSpan{
+#rememberMeSpan,
+#registerSpan {
 	width: 15px;
 	height: 15px;
 	border: 1px $primary solid;
 }
 
-.form-check-label{
-	cursor:pointer;
+.form-check-label {
+	cursor: pointer;
 }
 
 #registerSpan {
 	position: absolute;
 	top: 25%;
 	left: 0;
-	
 }
 #registration_form_agreeTerms {
 	visibility: hidden;
@@ -230,12 +234,12 @@ ul{
 }
 
 // Erreurs
-.form-error-message{
+.form-error-message {
 	color: $primary;
 }
-.form-check-input.is-invalid ~ .form-check-label{
+.form-check-input.is-invalid ~ .form-check-label {
 	color: $light1;
 }
-.form-error-icon{
+.form-error-icon {
 	display: none;
 }

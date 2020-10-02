@@ -159,7 +159,6 @@ class CardsController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_USER');
         if ($this->getUser()->getId() === $card->getUser()->getID()) {
             $token = $request->request->get('csrf_token');
-            dd($this->getUser()->getId() . '' . $card->getUser()->getID());
             if ($this->isCsrfTokenValid('card_deletion_' . $card->getId(), $token)) {
                 $em->remove($card);
                 $em->flush();
